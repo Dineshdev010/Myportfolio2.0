@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 20% 4%;
+    --foreground: 180 100% 90%;
+
+    --card: 220 25% 8%;
+    --card-foreground: 180 100% 90%;
+
+    --popover: 220 25% 8%;
+    --popover-foreground: 180 100% 90%;
+
+    --primary: 180 100% 50%;
+    --primary-foreground: 220 20% 4%;
+
+    --secondary: 145 100% 45%;
+    --secondary-foreground: 220 20% 4%;
+
+    --muted: 220 20% 12%;
+    --muted-foreground: 210 15% 55%;
+
+    --accent: 260 100% 65%;
+    --accent-foreground: 220 20% 4%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 210 30% 18%;
+    --input: 210 30% 18%;
+    --ring: 180 100% 50%;
+
+    --radius: 0.5rem;
+
+    --neon-cyan: 180 100% 50%;
+    --neon-green: 145 100% 45%;
+    --neon-purple: 260 100% 65%;
+    --deep-blue: 230 60% 15%;
+    --glow-cyan: 0 4px 30px hsl(180 100% 50% / 0.4);
+    --glow-green: 0 4px 30px hsl(145 100% 45% / 0.4);
+
+    --font-display: 'Orbitron', sans-serif;
+    --font-body: 'Rajdhani', sans-serif;
+    --font-mono: 'Share Tech Mono', monospace;
+
+    --sidebar-background: 220 25% 8%;
+    --sidebar-foreground: 180 100% 90%;
+    --sidebar-primary: 180 100% 50%;
+    --sidebar-primary-foreground: 220 20% 4%;
+    --sidebar-accent: 220 20% 12%;
+    --sidebar-accent-foreground: 180 100% 90%;
+    --sidebar-border: 210 30% 18%;
+    --sidebar-ring: 180 100% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+  .font-body {
+    font-family: var(--font-body);
+  }
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+  .text-glow-cyan {
+    text-shadow: 0 0 10px hsl(var(--neon-cyan) / 0.8), 0 0 40px hsl(var(--neon-cyan) / 0.4);
+  }
+  .text-glow-green {
+    text-shadow: 0 0 10px hsl(var(--neon-green) / 0.8), 0 0 40px hsl(var(--neon-green) / 0.4);
+  }
+  .border-glow-cyan {
+    box-shadow: 0 0 10px hsl(var(--neon-cyan) / 0.3), inset 0 0 10px hsl(var(--neon-cyan) / 0.1);
+    border-color: hsl(var(--neon-cyan) / 0.5);
+  }
+  .bg-glass {
+    background: hsl(var(--background) / 0.6);
+    backdrop-filter: blur(20px);
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary) / 0.4);
+  border-radius: 2px;
+}
+
+/* Loading screen */
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: hsl(var(--background));
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
