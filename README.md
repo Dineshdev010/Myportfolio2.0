@@ -74,7 +74,7 @@ portfolio-3d
 
 Clone the repository
 
-git clone https://github.com/YOUR_USERNAME/portfolio-3d.git
+git clone git@github.com:Dineshdev010/Myportfolio2.0.git
 
 Navigate to the project folder
 
@@ -103,10 +103,10 @@ Showcase my projects and skills interactively
 📬 Contact
 
 GitHub
-https://github.com/YOUR_USERNAME
+https://github.com/Dineshdev010
 
 Email
-your-email@example.com
+dineshjas986@gmai.com
 
 ⭐ If you found this project useful, consider giving it a star.
 
