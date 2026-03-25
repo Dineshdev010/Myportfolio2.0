@@ -8,8 +8,31 @@ const KeyboardControls = () => {
   const velocity = useRef(new THREE.Vector3());
 
   useEffect(() => {
+    let lastScrollAt = 0;
     const onKeyDown = (e: KeyboardEvent) => {
-      // Prevent OrbitControls or other handlers from eating our events
+      // Section navigation keys: drive page scroll (camera Z is scroll-synced).
+      if (e.code === 'ArrowUp' || e.code === 'KeyW') {
+        e.preventDefault();
+        const now = Date.now();
+        if (now - lastScrollAt > 20) {
+          lastScrollAt = now;
+          window.scrollBy({ top: -window.innerHeight * 0.04, behavior: 'auto' });
+        }
+      }
+      if (e.code === 'ArrowDown' || e.code === 'KeyS') {
+        e.preventDefault();
+        const now = Date.now();
+        if (now - lastScrollAt > 20) {
+          lastScrollAt = now;
+          window.scrollBy({ top: window.innerHeight * 0.04, behavior: 'auto' });
+        }
+      }
+
+      // Prevent browser/Orbit side effects for movement keys.
+      if (e.code.startsWith('Arrow') || e.code === 'Space' || e.code === 'KeyW' || e.code === 'KeyS') {
+        e.preventDefault();
+      }
+
       keys.current[e.code] = true;
     };
     const onKeyUp = (e: KeyboardEvent) => {
@@ -37,8 +60,7 @@ const KeyboardControls = () => {
     right.y = 0;
     right.normalize();
 
-    if (k['KeyW'] || k['ArrowUp']) move.add(forward.clone().multiplyScalar(speed * delta));
-    if (k['KeyS'] || k['ArrowDown']) move.add(forward.clone().multiplyScalar(-speed * delta));
+    // Forward/backward travel is scroll-based in this experience.
     if (k['KeyA'] || k['ArrowLeft']) move.add(right.clone().multiplyScalar(-speed * delta));
     if (k['KeyD'] || k['ArrowRight']) move.add(right.clone().multiplyScalar(speed * delta));
     if (k['Space']) move.y += speed * delta;

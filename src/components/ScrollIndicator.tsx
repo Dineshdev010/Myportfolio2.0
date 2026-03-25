@@ -1,4 +1,4 @@
-const zones = ['Landing', 'About', 'Skills', 'Projects', 'Data', 'Contact'];
+const zones = ['Landing', 'About', 'Experience', 'Skills', 'Certificates', 'Projects', 'Data', 'Contact', 'Outro'];
 
 interface ScrollIndicatorProps {
   progress: number;

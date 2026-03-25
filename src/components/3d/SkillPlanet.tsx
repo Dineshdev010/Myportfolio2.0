@@ -60,8 +60,8 @@ const SkillPlanet = ({ name, orbitRadius, speed, size, color, centerPosition, of
         </mesh>
       )}
       <Text
-        position={[0, size + 0.25, 0]}
-        fontSize={hovered ? 0.24 : 0.18}
+        position={[0, size + 0.3, 0]}
+        fontSize={hovered ? 0.28 : 0.22}
         color={color}
         font={undefined}
         anchorX="center"

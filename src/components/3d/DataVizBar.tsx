@@ -15,6 +15,8 @@ interface DataVizBarProps {
 const DataVizBar = ({ position, height, color, label, value = 0, delay = 0 }: DataVizBarProps) => {
   const ref = useRef<THREE.Mesh>(null);
   const glowRef = useRef<THREE.Mesh>(null);
+  const beaconRef = useRef<THREE.Mesh>(null);
+  const frameRef = useRef<THREE.Mesh>(null);
   const currentHeight = useRef(0);
   const [hovered, setHovered] = useState(false);
   const startTime = useRef<number | null>(null);
@@ -51,10 +53,23 @@ const DataVizBar = ({ position, height, color, label, value = 0, delay = 0 }: Da
       glowRef.current.position.y = position[1] + h * 0.5 + 0.05;
       glowRef.current.scale.setScalar(hovered ? 1.2 : 1);
     }
+
+    if (beaconRef.current) {
+      beaconRef.current.position.y = position[1] + h * 0.5 + 0.18 + Math.sin(clock.elapsedTime * 3.5 + delay) * 0.08;
+    }
+
+    if (frameRef.current) {
+      frameRef.current.rotation.y = clock.elapsedTime * 0.35;
+    }
   });
 
   return (
     <group>
+      <mesh position={[position[0], position[1] - 0.35, position[2]]} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[0.35, 0.56, 32]} />
+        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.8} transparent opacity={0.22} side={THREE.DoubleSide} />
+      </mesh>
+
       {/* Main bar */}
       <mesh
         ref={ref}
@@ -72,6 +87,11 @@ const DataVizBar = ({ position, height, color, label, value = 0, delay = 0 }: Da
         />
       </mesh>
 
+      <mesh ref={frameRef} position={[position[0], position[1] + 0.2, position[2]]}>
+        <boxGeometry args={[0.58, 0.8, 0.58]} />
+        <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.25} transparent opacity={0.12} wireframe />
+      </mesh>
+
       {/* Top glow cap */}
       <mesh ref={glowRef} position={[position[0], position[1], position[2]]}>
         <boxGeometry args={[0.55, 0.05, 0.55]} />
@@ -84,14 +104,21 @@ const DataVizBar = ({ position, height, color, label, value = 0, delay = 0 }: Da
         />
       </mesh>
 
+      <mesh ref={beaconRef} position={[position[0], position[1] + 0.3, position[2]]}>
+        <sphereGeometry args={[0.07, 10, 10]} />
+        <meshStandardMaterial color="#ffffff" emissive={color} emissiveIntensity={3} />
+      </mesh>
+
       {/* Label on TOP of bar */}
       <Text
-        position={[position[0], position[1] + height * 0.55 + 0.6, position[2]]}
-        fontSize={0.16}
+        position={[position[0], position[1] + height * 0.55 + 0.82, position[2]]}
+        fontSize={0.17}
         color={color}
         font={undefined}
         anchorX="center"
         anchorY="bottom"
+        maxWidth={1.25}
+        textAlign="center"
         outlineWidth={0.01}
         outlineColor="#000000"
       >
@@ -101,8 +128,8 @@ const DataVizBar = ({ position, height, color, label, value = 0, delay = 0 }: Da
       {/* Value percentage */}
       {value > 0 && (
         <Text
-          position={[position[0], position[1] + height * 0.55 + 0.35, position[2]]}
-          fontSize={0.13}
+          position={[position[0], position[1] + height * 0.55 + 0.56, position[2]]}
+          fontSize={0.14}
           color="#ffffff"
           font={undefined}
           anchorX="center"
@@ -114,19 +141,6 @@ const DataVizBar = ({ position, height, color, label, value = 0, delay = 0 }: Da
         </Text>
       )}
 
-      {/* Bottom label */}
-      <Text
-        position={[position[0], position[1] - 0.2, position[2] + 0.4]}
-        fontSize={0.09}
-        color={color}
-        font={undefined}
-        anchorX="center"
-        rotation={[-0.3, 0, 0]}
-        outlineWidth={0.005}
-        outlineColor="#000000"
-      >
-        {label}
-      </Text>
     </group>
   );
 };

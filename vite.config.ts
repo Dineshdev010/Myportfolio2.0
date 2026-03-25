@@ -18,4 +18,15 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ["react", "react-dom", "react-router-dom"],
+          three: ["three", "@react-three/fiber", "@react-three/drei"],
+          ui: ["lucide-react"],
+        },
+      },
+    },
+  },
 }));
